@@ -5,10 +5,13 @@ from env import host, user, password
 
 # function to get the url
 
+
 def get_db_url(db_name):
     return f"mysql+pymysql://{user}:{password}@{host}/{db_name}"
 
+
 # function that passes my query and my url to return df
+
 
 def get_data_from_sql():
     query = """
@@ -16,10 +19,12 @@ def get_data_from_sql():
     FROM customers
     WHERE contract_type_id = 3;
     """
-    df = pd.read_sql(query, get_db_url('telco_churn'))
+    df = pd.read_sql(query, get_db_url("telco_churn"))
     return df
 
+
 # function that rules them all by acquiring and prepping my df for exploration or modeling
+
 
 def wrangle_telco():
     """
@@ -29,6 +34,14 @@ def wrangle_telco():
     """
     df = get_data_from_sql()
     df.tenure.replace(0, 1, inplace=True)
-    df.total_charges.replace(' ', df.monthly_charges, inplace=True)
+    df.total_charges.replace(" ", df.monthly_charges, inplace=True)
     df.total_charges = df.total_charges.astype(float)
+    return df
+
+
+def wrangle_grades():
+    grades = pd.read_csv("student_grades.csv")
+    grades.drop(columns="student_id", inplace=True)
+    grades.replace(r"^\s*$", np.nan, regex=True, inplace=True)
+    df = grades.dropna().astype("int")
     return df
