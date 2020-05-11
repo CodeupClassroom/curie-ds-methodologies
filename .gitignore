@@ -11,4 +11,5 @@ __pycache__
 .vscode/
 env.py
 zillow.csv
+clustering/clean_zillow.csv 
 *.csv
