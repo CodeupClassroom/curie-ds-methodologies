@@ -68,7 +68,7 @@ def get_store_data():
 
         # convert sale_date to DateTime Index
         df['sale_date'] = pd.to_datetime(df.sale_date)
-        df = df.sort_index()
+        df = df.set_index('sale_date').sort_index()
 
         # write merged DateTime df with all data to directory for future use
         df.to_csv('big_df.csv')
